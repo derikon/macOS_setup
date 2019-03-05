@@ -69,13 +69,17 @@ INSTALLED_FORMULAE="Installed Formulae:"
 install_brew_formula () {
     local FORMULA=$1
     h3 ${FORMULA}
-    echo -e "${C_YELLOW}install ${FORMULA} - this might take a while ...${C_CLEAR}"
-    $(brew install ${FORMULA} &> /dev/null) &> /dev/null
-    if [[ $? != 0 ]]; then
-        echo -e "${C_RED}FAILED!${C_CLEAR}"
+    if brew ls --versions ${FORMULA} &> /dev/null; then
+        echo -e "${C_GREEN}already installed${C_CLEAR}"
     else
-        echo -e "${C_GREEN}finished${C_CLEAR}"
-        INSTALLED_FORMULAE="${INSTALLED_FORMULAE} ${FORMULA}"
+        echo -e "${C_YELLOW}install ${FORMULA} - this might take a while ...${C_CLEAR}"
+        $(brew install ${FORMULA} &> /dev/null) &> /dev/null
+        if [[ $? != 0 ]]; then
+            echo -e "${C_RED}FAILED!${C_CLEAR}"
+        else
+            echo -e "${C_GREEN}finished${C_CLEAR}"
+            INSTALLED_FORMULAE="${INSTALLED_FORMULAE} ${FORMULA}"
+        fi
     fi
 }
 
