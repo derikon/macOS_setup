@@ -665,6 +665,7 @@ if [[ "$INSTALL_MEDIA" != "n" ]]; then
         install_brew_cask gimp
     fi
     if [[ "$INSTALL_INKSCAPE" != "n" ]]; then
+        install_brew_cask xquartz
         install_brew_cask inkscape
     fi
 fi
