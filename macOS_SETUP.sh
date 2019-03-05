@@ -87,13 +87,17 @@ INSTALLED_CASKS="Installed Casks:"
 install_brew_cask () {
     local CASK=$1
     h3 ${CASK}
-    echo -e "${C_YELLOW}install ${CASK} - this might take a while ...${C_CLEAR}"
-    $(brew cask install ${CASK} &> /dev/null) &> /dev/null
-    if [[ $? != 0 ]]; then
-        echo -e "${C_RED}FAILED!${C_CLEAR}"
+    if [[ $(brew cask ls | grep ${CASK}) != "" ]]; then
+        echo -e "${C_GREEN}already installed${C_CLEAR}"
     else
-        echo -e "${C_GREEN}finished${C_CLEAR}"
-        INSTALLED_CASKS="${INSTALLED_CASKS} ${CASK}"
+        echo -e "${C_YELLOW}install ${CASK} - this might take a while ...${C_CLEAR}"
+        $(brew cask install ${CASK} &> /dev/null) &> /dev/null
+        if [[ $? != 0 ]]; then
+            echo -e "${C_RED}FAILED!${C_CLEAR}"
+        else
+            echo -e "${C_GREEN}finished${C_CLEAR}"
+            INSTALLED_CASKS="${INSTALLED_CASKS} ${CASK}"
+        fi
     fi
 }
 
