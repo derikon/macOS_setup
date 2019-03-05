@@ -84,7 +84,7 @@ install_brew_cask () {
     local CASK=$1
     h3 ${CASK}
     echo -e "${C_YELLOW}install ${CASK} - this might take a while ...${C_CLEAR}"
-    $(brew install ${CASK} &> /dev/null) &> /dev/null
+    $(brew cask install ${CASK} &> /dev/null) &> /dev/null
     if [[ $? != 0 ]]; then
         echo -e "${C_RED}FAILED!${C_CLEAR}"
     else
